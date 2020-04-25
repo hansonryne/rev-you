@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    depends_on:
+      - database
+    volumes:
+      - ./:/app
+      - gem_cache:/home/railsuser/gems
+    ports:
+     - 3000:3000
+    env_file:
+     - .env
+    environment:
+     - PATH=/home/railsuser/gems/bin:$PATH
+    command: /app/entrypoint.sh
+
+  database:
+    image: postgres:11.2-alpine
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  gem_cache:
+  db_data:
