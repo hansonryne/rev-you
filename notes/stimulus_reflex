@@ -1,0 +1,3 @@
+## Easy Install
+bundle add stimulus_reflex
+bundle exec rails stimulus_reflex:install

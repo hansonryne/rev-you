@@ -1,0 +1,18 @@
+## Install tailwind
+yarn add tailwindcss
+
+## Add to /postcss.config.js
+require('tailwindcss'),
+require('autoprefixer'),
+
+## Build app/javascript/packs/stylesheets.css
+echo "@tailwind base;
+@tailwind components;
+@tailwind utilities;" > app/javascript/packs/stylesheets.css
+
+## Add the following line in app/frontend/packs/application.js
+import './stylesheets.css'
+
+## Make sure tags look like below in app/views/layouts/application.html.erb
+<%= stylesheet_pack_tag 'stylesheets', 'data-turbolinks-track': 'reload' %>
+<%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
