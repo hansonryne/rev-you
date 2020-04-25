@@ -38,6 +38,11 @@ Once the app directory is built out, move the database.yml that came in this rep
 mv ./database.yml config/database.yml
 ```
 
+Make sure that all the files are owned by the right user
+```
+chown -R 1000:1000 .
+```
+
 All that should be left is to docker-compose up and build
 ```
 docker-compose up --build
