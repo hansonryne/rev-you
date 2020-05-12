@@ -4,6 +4,8 @@ bundle check || bundle install
 
 #echo "Copying node cache"
 #rsync -av /node_cache/. /app/
+echo "Waiting for PG to be ready"
+sleep 3
 
 echo "Creating database..."
 bundle exec rake db:create
