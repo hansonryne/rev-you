@@ -1,5 +1,23 @@
-<h1>New Todo</h1>
+<div class="m-3 flex justify-center">
+  <div class="max-w-full flex">
+    <%= image_tag "notepad.jpg", class: "w-32 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center object-cover object-left overflow-hidden" %> 
+    <div class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col leading-normal">
 
-<%= render 'form', todo: @todo %>
+      <div class="mb-8">
+        <div class="text-gray-900 font-bold text-xl mb-2">Create a new todo item:</div>
+        <blockquote class="p-4 max-w-md italic border-l-4 bg-neutral-100 text-neutral-600 border-neutral-500 quote">
+        <p class="text-gray-700 text-base"><%= @quote['text'] %></p>
+        <cite class="float-right text-gray-700 text-base"><%= @quote['author'] %></cite>
+        </blockquote>
+      </div>
 
-<%= link_to 'Back', todos_path %>
+      <div class="items-center">
+        <div>
+          <%= render 'form', todo: @todo %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

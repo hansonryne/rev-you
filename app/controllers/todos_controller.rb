@@ -1,10 +1,12 @@
 class TodosController < ApplicationController
   before_action :set_todo, only: [:show, :edit, :update, :destroy]
+  before_action :get_quote, only: [:index, :new]
 
   # GET /todos
   # GET /todos.json
   def index
     @todos = Todo.all
+    @new_todo = Todo.new
   end
 
   # GET /todos/1
@@ -31,6 +33,7 @@ class TodosController < ApplicationController
         format.html { redirect_to @todo, notice: 'Todo was successfully created.' }
         format.json { render :show, status: :created, location: @todo }
       else
+        @quote=get_quote
         format.html { render :new }
         format.json { render json: @todo.errors, status: :unprocessable_entity }
       end
@@ -56,19 +59,24 @@ class TodosController < ApplicationController
   def destroy
     @todo.destroy
     respond_to do |format|
-      format.html { redirect_to todos_url, notice: 'Todo was successfully destroyed.' }
+      format.html { redirect_to todos_url, notice: 'Todo was successfully deleted.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_todo
-      @todo = Todo.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_todo
+    @todo = Todo.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def todo_params
-      params.require(:todo).permit(:body, :reminder, :status)
-    end
+  def get_quote
+    @quote = JSON.parse(File.read(Rails.root.join('storage/quotes'))).sample
+  end
+
+
+  # Only allow a list of trusted parameters through.
+  def todo_params
+    params.require(:todo).permit(:body, :reminder, :status)
+  end
 end

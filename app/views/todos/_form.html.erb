@@ -1,28 +1,35 @@
-<%= form_with(model: todo, local: true) do |form| %>
+<%= form_with(model: todo, local: true, class: "w-full max-w-lg") do |form| %>
   <% if todo.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(todo.errors.count, "error") %> prohibited this todo from being saved:</h2>
+      <h2 class="text-red-500"><%= pluralize(todo.errors.count, "error") %> prohibited this todo from being saved:</h2>
 
       <ul>
         <% todo.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+          <li class="text-red-500 font-bold"><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :body %>
-    <%= form.text_area :body %>
+  <div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full md:w-2/3 px-3 mb-6 md:mb-0">
+      <div class="field">
+        <%= form.label :body, class: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" %>
+        <%= form.text_area :body, class: "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white resize-none" %>
+      </div>
+    </div>
+
+    <div class="w-full md:w-1/3 px-3">
+      <div class="field">
+        <%= form.label :reminder, class: "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" %>
+        <%= form.text_field :reminder, class: "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white", data: { behavior: "flatpickr" } %>
+      </div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :reminder %>
-    <%= form.text_field :reminder, data: { behavior: "flatpickr" } %>
-  </div>
-
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <div class="flex">
+    <%= form.submit "Create", class: "flex-shrink-0 border-transparent border-4 text-black-500 hover:font-bold hover:bg-green-200 hover:shadow-md text-sm py-1 px-2 rounded mx-4" %>
 <% end %>
+<%= button_to "Cancel", todos_path, method: :get, class: "flex-shrink-0 border-transparent border-4 text-black-500 hover:font-bold hover:bg-red-200 hover:shadow-md text-sm py-1 px-2 rounded mx-4", data: {:action => "click->modal#close"} %>
+  </div>
+

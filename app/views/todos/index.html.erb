@@ -1,26 +1,23 @@
-<p id="notice"><%= notice %></p>
+<div class="max-w-3xl mx-auto">
+  <p id="notice"><%= notice %></p>
 
-<h1>Todos</h1>
-
-<table>
+<table class="table-auto w-full">
   <thead>
-    <tr>
-      <th>Body</th>
-      <th>Reminder</th>
-      <th>Status</th>
-      <th colspan="3"></th>
+    <tr> 
+      <th class="px-4 py-2 md:w-1/2">Todo List</th>
+      <th class="px-4 py-2 md:w-1/6 md:table-cell hidden">Status</th>
+      <th class="px-4 py-2 md:w-1/6 md:table-cell hidden">Reminder</th>
+      <th class="px-4 py-2 md:w-1/6 md:table-cell hidden" colspan="1"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @todos.each do |todo| %>
-      <tr>
-        <td><%= todo.body %></td>
-        <td><%= todo.reminder %></td>
-        <td><%= todo.status %></td>
-        <td><%= link_to 'Show', todo %></td>
-        <td><%= link_to 'Edit', edit_todo_path(todo) %></td>
-        <td><%= link_to 'Destroy', todo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <tr class="mx-4 my-2 <%= cycle("bg-gray-300", "bg-gray-100") -%>">
+        <td class="border px-4 py-2"><%= link_to todo.body, todo %></td>
+        <td class="border px-4 py-2 md:table-cell hidden"><%= todo.status %></td>
+        <td class="border px-4 py-2 md:table-cell hidden"><%= todo.reminder %></td>
+        <td class="px-4 py-2 md:table-cell hidden"><%= link_to image_tag('trash.png', alt: "Delete", class: "h-6"), todo, method: :delete, class: "flex justify-center align-middle", data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +25,34 @@
 
 <br>
 
-<%= link_to 'New Todo', new_todo_path %>
+<%# link_to 'New Todo', new_todo_path %>
+
+
+
+<div data-controller="modal" data-modal-allow-background-close="false">
+  <a href="#" data-action="click->modal#open" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded flex items-center justify-center md:w-1/6 mx-4">
+    <span>New ToDo</span>
+  </a>
+
+  <!-- Modal Container -->
+  <div data-target="modal.container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+    <!-- Modal Inner Container -->
+    <div class="max-h-screen w-full max-w-lg relative">
+      <!-- Modal Card -->
+      <div class="m-1 bg-white rounded shadow">
+        <div class="p-8">
+          <h2 class="text-xl mb-4">Create a new todo:</h2>
+          <div class="mb-8">
+            <blockquote class="p-4 max-w-md italic border-l-4 bg-neutral-100 text-neutral-600 border-neutral-500 quote">
+              <p class="text-gray-700 text-base"><%= @quote['text'] %></p>
+              <cite class="float-right text-gray-700 text-base"><%= @quote['author'] %></cite>
+            </blockquote>
+          </div>
+          <%= render 'form', todo: @new_todo %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
